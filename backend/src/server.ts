@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import env from './util/validateEnv'
 import apiRoutes from './routes/notes'
+import morgan from 'morgan'
 
 
 const app = express()
@@ -13,6 +14,8 @@ const PORT = process.env.port || 8001
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+
+app.use(morgan('dev'))
 app.use('/apiroute', apiRoutes)
 
 
