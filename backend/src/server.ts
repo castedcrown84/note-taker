@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 dotenv.config()
 import env from './util/validateEnv'
-import Notes from './models/note'
+import apiRoutes from './routes/notes'
+
 
 const app = express()
 const PORT = process.env.port || 8001
@@ -12,26 +13,9 @@ const PORT = process.env.port || 8001
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-//Gets all the notes
-app.get('/', async (req, res) => {
-  //Try catch is essentially for handeling errors
-  try {
-    const notes = await Notes.find()
-    res.status(200).json(notes)
-  } catch (error) {
-    console.log(error)
-  }
-})
-//Creates a note
+app.use('/apiroute', apiRoutes)
 
-app.post('/post', async (req, res) => {
-  try {
-    const notes = await Notes.create(req.body)
-    res.json(notes)
-  } catch (error) {
-    console.log(error)
-  }
-})
+
 // Connects to database
 mongoose
   .connect(env.MONGO_CONNECTION_STRING)
