@@ -5,6 +5,7 @@ import Notes from '../models/note'
 const getNotes: RequestHandler = async (req, res) => {
   try {
     const notes = await Notes.find()
+
     res.status(200).json(notes)
   } catch (err) {
     console.log(err)
@@ -15,6 +16,10 @@ const getNotes: RequestHandler = async (req, res) => {
 const createNote: RequestHandler = async (req, res) => {
   try {
     const note = await Notes.create(req.body)
+
+    if (!note) {
+      throw Error('Needs valid input')
+    }
     res.status(200).json(note)
   } catch (error) {
     console.log(error)
@@ -24,6 +29,10 @@ const createNote: RequestHandler = async (req, res) => {
 const getNote: RequestHandler = async (req, res) => {
   try {
     const note = await Notes.findById(req.params.id)
+
+    if (!note) {
+      throw Error('note not found')
+    }
     res.status(200).json(note)
   } catch (error) {
     console.log(error)
