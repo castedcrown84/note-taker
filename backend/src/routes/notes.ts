@@ -1,5 +1,5 @@
 import express from 'express'
-import { getNotes, createNote, getNote} from '../controllers/notes'
+import { getNotes, createNote, getNote, upDateNote} from '../controllers/notes'
 
 const Router = express.Router()
 
@@ -11,5 +11,8 @@ Router.get('/:id', getNote)
 
 //Router for creating a Note and adding it to database
 Router.post('/post', createNote)
+
+//Route for updating Note
+Router.patch('/:id', upDateNote)
 
 export default Router
