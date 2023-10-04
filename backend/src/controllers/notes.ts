@@ -49,29 +49,19 @@ const getNote: RequestHandler = async (req, res) => {
 
 //controller function for updating a single note
 const upDateNote: RequestHandler = async (req, res) => {
-  const id = req.params.id
-  const newTitle = req.body.title
-  const newText = req.body.text
+  const { id } = req.params
 
   try {
     if (!mongoose.isValidObjectId(id)) {
-      throw new Error('invalid Id')
-    }
-    if (!newTitle) {
-      throw new Error('Note must have a title')
+      res.status(400).json({ error: 'Invalid ID' })
     }
 
-    const note = await Notes.findById(id)
+    const note = await Notes.findByIdAndUpdate({ _id: id }, { ...req.body })
     if (!note) {
-      throw new Error('Note not found')
+      res.status(404).json({ error: 'Note not found' })
     }
 
-    note.title = newTitle
-    note.text = newText
-
-    const upDatedNotes = await note.save()
-
-    res.status(200).json(upDatedNotes)
+    res.status(200).json(note)
   } catch (error) {
     console.log(error)
   }
