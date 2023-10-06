@@ -1,22 +1,25 @@
-import { Note as NoteModel } from "../models/notes";
-import { Card } from "react-bootstrap";
+import { Note as NoteModel } from '../models/notes'
+import { Card } from 'react-bootstrap'
+import styles from '../styles/note.module.css'
 
-interface NoteProps{
-    note: NoteModel
+interface NoteProps {
+  note: NoteModel
 }
 
+const Notes = ({ note }: NoteProps) => {
+  const { title, text, createdAt, updatedAt } = note
 
-const Notes = ({note}: NoteProps) => {
-    return ( <div>
-    <Card>
-    <Card.Body>
-        <Card.Title>
-            {note.title}
-        </Card.Title>
-    </Card.Body>
-    </Card>
-
-    </div> );
+  return (
+    <div>
+      <Card className={styles.noteCard}>
+        <Card.Body >
+          <Card.Title className={styles.cardText}>{title}</Card.Title>
+          <Card.Text>{text}</Card.Text>
+          <Card.Footer>{createdAt} {updatedAt}</Card.Footer>
+        </Card.Body>
+      </Card>
+    </div>
+  )
 }
- 
-export default Notes;
+
+export default Notes
