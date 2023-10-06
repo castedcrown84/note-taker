@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import './App.css'
+import {Note as NoteModel} from './models/notes'
+import Notes from './components/Notes'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+const App = () => {
+  const [notes, setNotes] = useState<NoteModel[]>([])
+
+  useEffect(() => {
+    fetch('/apiroute', { method: 'GET' })
+      .then((res) => {
+        if(!res.ok){
+          throw new Error('Cannot fetch')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        setNotes(data)
+       
+      }).catch((error) => {
+        console.log(error)
+      })
+  },[])
+
+  return(
+  <div className="app">
+    {
+    notes && notes.map(note => (
+    <Notes note={note} key={note._id}/>
+    ))}
+  </div>
+
+   )}
+
+export default App
