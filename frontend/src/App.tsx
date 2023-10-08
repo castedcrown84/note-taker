@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Note as NoteModel } from './models/notes'
 import Notes from './components/Notes'
-import { Container, Row } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import styles from './styles/NotesPage.module.css'
 
 const App = () => {
   const [notes, setNotes] = useState<NoteModel[]>([])
@@ -24,8 +27,13 @@ const App = () => {
 
   return (
     <Container>
-      <Row xs={1} md={2} xl={3}>
-        {notes && notes.map((note) => <Notes note={note} key={note._id} />)}
+      <Row xs={1} md={2} xl={3} className="g-4">
+        {notes &&
+          notes.map((note) => (
+            <Col key={note._id}>
+              <Notes note={note} className={styles.note}/>
+            </Col>
+          ))}
       </Row>
     </Container>
   )
