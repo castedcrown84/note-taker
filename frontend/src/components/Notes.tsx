@@ -5,28 +5,28 @@ import { formatDate } from '../utils/formatDate'
 
 interface NoteProps {
   note: NoteModel
-  className?:string
+  className?: string
 }
+/* since the paramaters are annotaed with NoteProps, whatever is defined in the NoteProps interface is going to be expected 
+to be passed in the parent component  */
+const Notes = ({ note, className }: NoteProps) => {
+  const { title, text, createdAt, updatedAt } = note
 
-const Notes = ({ note, className}:NoteProps) => {
-  const { title, text, createdAt, updatedAt } = note;
-
-
-  let createdUpdatedText:string;
-  if(updatedAt > createdAt){
-    createdUpdatedText = "Updated: " + formatDate(updatedAt)
-  }else{
-    createdUpdatedText = "Created: " + formatDate(createdAt)
+  let createdUpdatedText: string
+  if (updatedAt > createdAt) {
+    createdUpdatedText = 'Updated: ' + formatDate(updatedAt)
+  } else {
+    createdUpdatedText = 'Created: ' + formatDate(createdAt)
   }
 
   return (
     <div>
       <Card className={`${styles.noteCard} ${className}`}>
-        <Card.Body className={styles.cardBody} >
+        <Card.Body className={styles.cardBody}>
           <Card.Title className={styles.cardText}>{title}</Card.Title>
           <Card.Text>{text}</Card.Text>
         </Card.Body>
-        <Card.Footer className='text-muted'>{createdUpdatedText} </Card.Footer>
+        <Card.Footer className="text-muted">{createdUpdatedText} </Card.Footer>
       </Card>
     </div>
   )
