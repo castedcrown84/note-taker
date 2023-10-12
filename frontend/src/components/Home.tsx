@@ -4,11 +4,17 @@ import Notes from './Notes'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import  Button from 'react-bootstrap/Button'
 import styles from '../styles/NotesPage.module.css'
+import AddNote from './addNote'
+
+
 
 const Home = () => {
   //Since typescript is strictly typed the state has to be defined.
   const [notes, setNotes] = useState<NoteModel[]>([])
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+
 
   useEffect(() => {
     fetch('/apiroute', { method: 'GET' })
@@ -28,6 +34,9 @@ const Home = () => {
 
   return (
     <Container>
+      <Button onClick={()=> {
+        setShowDialog(true)
+      }}>Add New Note</Button>
       <Row xs={1} md={2} xl={3} className="g-4">
         {notes &&
           notes.map((note) => (
@@ -36,6 +45,9 @@ const Home = () => {
             </Col>
           ))}
       </Row>
+      {
+        showDialog && <AddNote onDismiss={() =>setShowDialog(false)}/>
+      }
     </Container>
   )
 }
