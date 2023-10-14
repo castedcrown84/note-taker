@@ -7,35 +7,34 @@ import Col from 'react-bootstrap/Col'
 import  Button from 'react-bootstrap/Button'
 import styles from '../styles/NotesPage.module.css'
 import AddNote from './addNote'
+import * as NotesApi from '../network/notes_api'
 
 
 
 const Home = () => {
   //Since typescript is strictly typed the state has to be defined.
   const [notes, setNotes] = useState<NoteModel[]>([])
-  const [showDialog, setShowDialog] = useState<boolean>(false)
+  const [showAddNoteDialog, setShowAddNoteDialog] = useState<boolean>(false)
+  
 
+useEffect(()=> {
 
-  useEffect(() => {
-    fetch('/apiroute', { method: 'GET' })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Cannot fetch')
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setNotes(data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
+  async function loadNotes(){
+    try{
+      const notes = await NotesApi.fetchNotes();
+      setNotes(notes)
+    }catch(error){
+
+      console.error(error)
+    }
+  }
+  loadNotes();
+}, [])
 
   return (
     <Container>
       <Button onClick={()=> {
-        setShowDialog(true)
+        setShowAddNoteDialog(true)
       }}>Add New Note</Button>
       <Row xs={1} md={2} xl={3} className="g-4">
         {notes &&
@@ -46,7 +45,7 @@ const Home = () => {
           ))}
       </Row>
       {
-        showDialog && <AddNote onDismiss={() =>setShowDialog(false)}/>
+       showAddNoteDialog && <AddNote />
       }
     </Container>
   )

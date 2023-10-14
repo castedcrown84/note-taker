@@ -10,7 +10,7 @@ Router.get('/', getNotes)
 Router.get('/:id', getNote)
 
 //Router for creating a Note and adding it to database
-Router.post('/post', createNote)
+Router.post('/', createNote)
 
 //Route for updating Note
 Router.patch('/:id', upDateNote)
