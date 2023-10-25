@@ -28,7 +28,7 @@ const AddNote = ({ onDismiss, onNoteSaved }: AddNoteDialogProps) => {
   }
 
   return (
-    <Modal show onHide={onDismiss}>
+    <Modal show onHide={()=>onDismiss()}>
       <Modal.Header closeButton>
         <Modal.Title>Add Note</Modal.Title>
       </Modal.Header>
