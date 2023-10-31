@@ -4,6 +4,7 @@ import styles from '../styles/note.module.css'
 import { formatDate } from '../utils/formatDate'
 import {MdDelete} from 'react-icons/md'
 import styleUtils from '../styles/utils.module.css'
+
 interface NoteProps {
   note: NoteModel,
   className?: string,
